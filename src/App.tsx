@@ -1,24 +1,18 @@
 import React, { useState } from 'react';
+import { ChooseBroker, CsvReader } from './components';
 import './App.css';
-import { ChooseBroker } from './ChooseBroker';
-import { CsvReader } from './CsvReader';
 
 function App() {
   const [broker, setBroker] = useState('');
+  const [dividends, setDividends] = useState([]);
 
   return (
     <div>
       <ChooseBroker onNewBroker={setBroker} />
 
-      CHOSEN BROKER: { broker }
+      <CsvReader onNewDividends={setDividends} />
 
-      <CsvReader />
-
-      <ol>
-        <li>Choose broker</li>
-        <li>Upload file</li>
-        <li>Results</li>
-      </ol>
+      { JSON.stringify(dividends, null, 2) }
     </div>
   );
 }
