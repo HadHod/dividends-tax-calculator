@@ -1,4 +1,4 @@
-export function ChooseBroker({ onNewBroker }) {
+export function ChooseBroker({ onNewBroker }: { onNewBroker: any }) {
   return (
     <div>
       <p>Choose broker</p>

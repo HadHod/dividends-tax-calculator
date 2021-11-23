@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChooseBroker, CsvReader } from './components';
+import { ChooseBroker, CsvReader, DividendsTable } from './components';
 import './App.css';
 
 function App() {
@@ -7,12 +7,12 @@ function App() {
   const [dividends, setDividends] = useState([]);
 
   return (
-    <div>
+    <div className="container">
       <ChooseBroker onNewBroker={setBroker} />
 
-      <CsvReader onNewDividends={setDividends} />
+      {broker !== '' && <CsvReader onNewDividends={setDividends} />}
 
-      { JSON.stringify(dividends, null, 2) }
+      {dividends.length && <DividendsTable data={dividends} />}
     </div>
   );
 }
