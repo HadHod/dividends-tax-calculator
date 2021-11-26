@@ -1,5 +1,6 @@
 table {
   width: 100%;
+  margin-top: 16px;
 }
 
 table tr {
@@ -32,4 +33,6 @@ table tr td {
 
 }
 
-
+table tr td input {
+  width: 40px !important;
+}

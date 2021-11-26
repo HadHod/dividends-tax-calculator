@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './DividendsTable.css';
 
 function getTaxInit(currency: string): number {
@@ -27,6 +27,12 @@ const TableRow = ({ row }: { row: any }) => {
     getExchangeRate(row.Data, row.Zmiana, setExchangeRate);
   }
 
+  useEffect(() => {
+    if (row.Zmiana !== 'PLN') {
+      setToPay(parseFloat((row.brutto * exchangeRate * additionalTax / 100).toFixed(2)));
+    }
+  }, [exchangeRate, additionalTax]);
+
   return (
     <tr>
       <td>{ row.Data }</td>
@@ -35,7 +41,7 @@ const TableRow = ({ row }: { row: any }) => {
       <td>{ row.brutto }</td>
       <td>{ row.netto }</td>
       <td>{ withholdingTax }%</td>
-      <td><input type="number" min="0" max="100" value={additionalTax} onChange={e => setAdditionalTax(parseInt(e.target.value || '0', 10))} />%</td>
+      <td><input type="number" min="0" max="100" value={additionalTax} onChange={e => setAdditionalTax(parseInt(e.target.value || '0', 10))} /> %</td>
       <td>{ exchangeRate }</td>
       <td>{ toPay }</td>
     </tr>
@@ -47,14 +53,14 @@ export function DividendsTable({ data }: { data: any[] }) {
     <table>
       <tr>
         <th>Data</th>
-        <th>Produkt</th>
+        <th>Produkt (ISIN)</th>
         <th>Waluta</th>
         <th>Brutto</th>
         <th>Netto</th>
-        <th>Payed tax</th>
-        <th>Missing tax</th>
-        <th>Exchange rate</th>
-        <th>To pay tax</th>
+        <th>Zapłacony</th>
+        <th>Brakujący %</th>
+        <th>Kurs</th>
+        <th>Do zapłaty</th>
       </tr>
       {data.map((row, i) => <TableRow key={i} row={row} />)}
     </table>

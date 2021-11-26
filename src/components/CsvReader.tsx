@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './CsvReader.css';
 
 const DELIM: string = ';';
 const EMPTY_PREFIX: string = 'empty_';
@@ -33,6 +34,7 @@ interface ICsvReader {
 
 export function CsvReader({ onNewDividends }: ICsvReader) {
   const [csvFile, setCsvFile] = useState({});
+  const [isFileReady, setIsFileReady] = useState(false);
 
   const processCSV = (str: any, delim = ';') => {
     const headers: string[] = getHeaders(str);
@@ -62,7 +64,8 @@ export function CsvReader({ onNewDividends }: ICsvReader) {
   }
 
   const onChange = (e: any) => {
-    setCsvFile(e.target?.files[0])
+    setCsvFile(e.target?.files[0]);
+    setIsFileReady(true);
   };
 
   const onSubmit = (e: any) => {
@@ -73,12 +76,9 @@ export function CsvReader({ onNewDividends }: ICsvReader) {
   }
 
   return (
-    <form id='csv-form'>
+    <form>
       <input type='file' accept='.csv' id='csvFile' onChange={onChange} />
-      <br />
-      <button onClick={onSubmit}>
-        Calculate
-      </button>
+      {isFileReady && <button onClick={onSubmit}>OBLICZ</button>}
     </form>
   );
 }
